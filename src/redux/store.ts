@@ -1,0 +1,49 @@
+import { createStore, applyMiddleware } from 'redux';
+import languageReducer from './language/languageReducer';
+import recommendProductsReducer from './recommendProducts/recommendProductsReducer';
+import thunk from 'redux-thunk';
+import { actionLog } from './middleware/actionLog';
+import { productDetailSlice } from './productDetail/slice';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { productSearchSlice } from './productSeatch/slice';
+import { UserSlice } from './user/slice';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+import { shoppingCartSlice } from './shoppingCart/slice';
+import { orderSlice } from './order/slice';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['user']
+};
+
+const rootReducer = combineReducers({
+  language: languageReducer,
+  recommendProducts: recommendProductsReducer,
+  productDetail: productDetailSlice.reducer,
+  productSearch: productSearchSlice.reducer,
+  user: UserSlice.reducer,
+  shoppingCart: shoppingCartSlice.reducer,
+  order: orderSlice.reducer
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// redux store
+// const store = createStore(rootReducer, applyMiddleware(thunk, actionLog));
+
+// RTK store
+const store = configureStore({
+  // reducer: rootReducer,
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), actionLog],
+  devTools: true
+});
+
+const persistor = persistStore(store);
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export default { store, persistor };
