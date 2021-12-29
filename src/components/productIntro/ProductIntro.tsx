@@ -24,8 +24,8 @@ const columns: ColumnsType<RowType> = [
   },
   {
     title: 'description',
-    dataIndex: 'title',
-    key: 'title',
+    dataIndex: 'description',
+    key: 'description',
     align: 'center'
   }
 ];
@@ -78,12 +78,12 @@ export const ProductIntro: React.FC<PropsType> = ({
       )
     },
     {
-      key: 2,
+      key: 3,
       title: '领取优惠',
       description: coupons ? discount : '无优惠券可领'
     },
     {
-      key: 2,
+      key: 4,
       title: '线路评价',
       description: (
         <>
@@ -117,6 +117,7 @@ export const ProductIntro: React.FC<PropsType> = ({
       <Table
         columns={columns}
         dataSource={tableDataSource}
+        showHeader={false}
         size="small"
         bordered={false}
         pagination={false}

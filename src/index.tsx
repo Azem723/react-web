@@ -11,7 +11,7 @@ import { Spin } from 'antd';
 
 import { PersistGate } from 'redux-persist/integration/react';
 
-axios.defaults.headers['x-icode'] = 'E42FDCBA16541BB0';
+axios.defaults.headers['x-icode'] = '7AAE852D5EB95E51';
 
 ReactDOM.render(
   <React.StrictMode>
